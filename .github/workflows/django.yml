@@ -21,7 +21,7 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v1
         with:
-          python-version: '3.11'
+          python-version: '3.11.3'
 
       - name: Create and start virtual environment
         run: |
@@ -57,6 +57,11 @@ jobs:
         with:
           name: python-app
           path: .
+
+      - name: Log in to Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
