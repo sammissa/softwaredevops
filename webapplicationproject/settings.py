@@ -71,17 +71,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'webapplicationproject.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite')
-    }
+# Parse database configuration from AZURE_POSTGRESQL_CONNECTIONSTRING
+DATABASES = {}
+DATABASES['default'] = dj_database_url.parse(os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING'])
+
+# Set some additional options for the database connection
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'require',
 }
 
-DATABASES['default'].update(db_from_env)
+# If the AZURE_POSTGRESQL_CONNECTIONSTRING environment variable is not set,
+# fall back to a local database.
+if not DATABASES['default']:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
