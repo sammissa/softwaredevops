@@ -14,6 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      name: 'build'
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       APP_NAME: ${{ secrets.APP_NAME }}
       AZURE_POSTGRESQL_HOST: ${{ secrets.AZURE_POSTGRESQL_HOST }}
