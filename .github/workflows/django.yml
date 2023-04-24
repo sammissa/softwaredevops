@@ -15,7 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      AZURE_POSTGRESQL_CONNECTIONSTRING: ${{ secrets.AZURE_POSTGRESQL_CONNECTIONSTRING }}
+      APP_NAME: ${{ secrets.APP_NAME }}
+      AZURE_POSTGRESQL_HOST: ${{ secrets.AZURE_POSTGRESQL_HOST }}
+      AZURE_POSTGRESQL_NAME: ${{ secrets.AZURE_POSTGRESQL_NAME }}
+      AZURE_POSTGRESQL_PASSWORD: ${{ secrets.AZURE_POSTGRESQL_PASSWORD }}
+      AZURE_POSTGRESQL_USER: ${{ secrets.AZURE_POSTGRESQL_USER }}
     steps:
       - uses: actions/checkout@v2
 

@@ -19,7 +19,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [os.environ['APP_NAME'] + '.azurewebsites.net', '127.0.0.1'] if 'APP_MAME' in os.environ else []
 
 # Application definition
 
@@ -68,10 +68,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'webapplicationproject.wsgi.application'
 
+db_name = os.environ['AZURE_POSTGRESQL_NAME']
+db_host = os.environ['AZURE_POSTGRESQL_HOST']
+db_user = os.environ['AZURE_POSTGRESQL_USER']
+db_password = os.environ['AZURE_POSTGRESQL_PASSWORD']
+
+# Configure Postgres database, for connection string
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': db_name,
+        'HOST': db_host,
+        'USER': db_user,
+        'PASSWORD': db_password,
+        'sslmode': 'require',
     }
 }
 
